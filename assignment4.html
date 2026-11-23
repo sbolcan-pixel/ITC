@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assignment #4 - Simple Payroll | CS 1130</title><link rel="stylesheet" href="style.css"></head>
+<body><div class="wrap"><a class="back" href="index.html">&larr; Back to home</a>
+<div class="card"><h2>Assignment #4 - Simple Payroll</h2><p class="sub">Monthly pay for one employee.</p>
+
+<div class="row"><label>Employee name<input id="emp" type="text"></label><label>Hourly rate (₱)<input id="rate" type="number" min="0" step="any"></label></div>
+<div class="row"><label>Regular hours<input id="reg" type="number" min="0" step="any"></label><label>Overtime hours<input id="ot" type="number" min="0" step="any" value="0"></label><button class="go" onclick="calcPayroll()">Compute pay</button></div>
+<div class="out" id="pay-msg"></div>
+<table id="pay-table" style="display:none"></table>
+<p class="note">Simplified rules: overtime is paid at 125%. SSS is 4.5% of gross, PhilHealth 2.5%, Pag-IBIG 2% (maximum ₱200). Withholding tax is the annual tax on taxable income (gross minus contributions, times 12) divided by 12.</p>
+</div></div><script src="common.js"></script>
+<script>
+function calcPayroll(){
+  const name=$("emp").value.trim()||"Employee";
+  const rate=parseFloat($("rate").value), reg=parseFloat($("reg").value), ot=parseFloat($("ot").value)||0;
+  const tbl=$("pay-table");
+  if(isNaN(rate)||isNaN(reg)||rate<0||reg<0||ot<0){tbl.style.display="none";return show("pay-msg","Enter a valid rate and hours (no negatives).",true)}
+  const regPay=reg*rate, otPay=ot*rate*1.25, gross=regPay+otPay;
+  const sss=gross*0.045, phil=gross*0.025, pagibig=Math.min(gross*0.02,200);
+  const wtax=taxFor((gross-sss-phil-pagibig)*12)/12;
+  const net=gross-sss-phil-pagibig-wtax;
+  show("pay-msg",`Payslip for <strong>${name.replace(/</g,"&lt;")}</strong>`);
+  const r=(l,v,c)=>`<tr${c?` class="${c}"`:""}><td>${l}</td><td>${peso(v)}</td></tr>`;
+  tbl.innerHTML=r("Regular pay",regPay)+r("Overtime pay",otPay)+r("Gross pay",gross,"total")
+    +r("SSS",sss)+r("PhilHealth",phil)+r("Pag-IBIG",pagibig)+r("Withholding tax",wtax)+r("Net pay",net,"total");
+  tbl.style.display="table";
+}
+</script></body></html>
