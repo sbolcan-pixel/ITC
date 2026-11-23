@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assignment #2 - Income Tax Calculator | CS 1130</title><link rel="stylesheet" href="style.css"></head>
+<body><div class="wrap"><a class="back" href="index.html">&larr; Back to home</a>
+<div class="card"><h2>Assignment #2 - Income Tax Calculator</h2><p class="sub">Annual tax using the Philippine graduated rates (TRAIN law, 2023 onward).</p>
+
+<div class="row"><label>Annual taxable income (₱)<input id="income" type="number" min="0" step="any"></label><button class="go" onclick="calcTax()">Calculate</button></div>
+<div class="out" id="tax-out"></div>
+<table>
+<tr><td>Up to ₱250,000</td><td>0%</td></tr>
+<tr><td>₱250,000 – ₱400,000</td><td>15% of excess over ₱250,000</td></tr>
+<tr><td>₱400,000 – ₱800,000</td><td>₱22,500 + 20% of excess over ₱400,000</td></tr>
+<tr><td>₱800,000 – ₱2,000,000</td><td>₱102,500 + 25% of excess over ₱800,000</td></tr>
+<tr><td>₱2,000,000 – ₱8,000,000</td><td>₱402,500 + 30% of excess over ₱2,000,000</td></tr>
+<tr><td>Over ₱8,000,000</td><td>₱2,202,500 + 35% of excess over ₱8,000,000</td></tr>
+</table>
+</div></div><script src="common.js"></script>
+<script src="assignment2.js"></script></body></html>
